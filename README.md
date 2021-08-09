@@ -16,11 +16,11 @@ You have to install:
 ## How To Use It
 
 ```bash
-# git clone https://github.com/vNugget/Kubernetes.git
+# git clone https://github.com/sudonewdev/k8s-vagrant-windows10
 ```
 
 ```bash
-# cd Kubernetes/AutoKube
+# cd k8s-vagrant-windows10
 ```
 
 ```bash

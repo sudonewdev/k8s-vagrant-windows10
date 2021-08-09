@@ -1,4 +1,3 @@
-# AutoKube
 
 ## Fully Automated Kubernetes Cluster Setup, with one master and N workers.
 
@@ -31,7 +30,3 @@ You have to install:
 # vagrant ssh master-1
 ```
 After this stage you can use kubectl
-
-## Videos are better!
-
-[![Watch the video](https://img.youtube.com/vi/dNL6w-Ym_nE/maxresdefault.jpg)](https://youtu.be/dNL6w-Ym_nE)

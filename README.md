@@ -1,10 +1,13 @@
 
 ## Fully Automated Kubernetes Cluster Setup, with one master and 'N' workers for VirtualBox over Windows 10
 
+special thanks to [Salah-Eddine Gassim](https://github.com/vNugget)
+used his repo as template [link](https://github.com/vNugget/Kubernetes/tree/main/AutoKube)
+
 This will install:
 
 - The Kubernetes version (currently 1.20)
-- Docker as a runtime
+- Docker as a container runtime
 - Calico as a CNI.
 
 ## Requirements

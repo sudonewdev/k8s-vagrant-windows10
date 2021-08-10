@@ -31,10 +31,12 @@ vagrant ssh master-1
 ```
 After this stage you can use kubectl
 
+```
 ➜  k8s-vagrant-windows10 git:(main) ✗ kubectl get nodes
 NAME       STATUS   ROLES                  AGE   VERSION
 master     Ready    control-plane,master   65m   v1.20.0
 worker-1   Ready    <none>                 62m   v1.20.0
 worker-2   Ready    <none>                 59m   v1.20.0
-➜  k8s-vagrant-windows10 git:(main) ✗
+```
+
 

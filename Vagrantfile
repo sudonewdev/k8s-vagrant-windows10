@@ -18,7 +18,7 @@ Vagrant.configure("2") do |config|
         master.vm.hostname = "master.jlab.org"
 		master.vm.synced_folder "data/", "/vagrant_data"
         master.vm.provider "virtualbox" do |v|
-            #v.name = "k8smaster1-1"
+            v.name = "master"
             v.memory = 2048
             v.cpus = 2
         end
@@ -34,7 +34,7 @@ Vagrant.configure("2") do |config|
             node.vm.hostname = "worker-#{i}.jlabs.org"
 			node.vm.synced_folder "data/", "/vagrant_data"
             node.vm.provider "virtualbox" do |v|
-                #v.name = "k8sworker1-#{i}"
+                v.name = "worker-#{i}"
                 v.memory = 2048
                 v.cpus = 2
             end

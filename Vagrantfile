@@ -1,42 +1,44 @@
 # image name to be used  as the base image for the hosts
 IMAGE_NAME = "bento/ubuntu-20.04"
 # subnet to be used for the nodes
-SUBNET = "192.168.56."
+SUBNET = "172.16.16."
 # pod cidr to be used with kubeadm
-POD_CIDR = "10.10.0.0/16"
+POD_CIDR = "192.168.0.0/16"
 # number of workers to be deployed
-N = 2
+NodeCount = 2
 
 Vagrant.configure("2") do |config|
     config.ssh.insert_key = false
     config.vm.box_check_update = false
+    config.vm.provision "shell", path: "scripts/bootstrap.sh"
 
-    config.vm.provider "virtualbox" do |v|
-        v.memory = 2048
-        v.cpus = 2
-    end
-      
     config.vm.define "master-1" do |master|
         master.vm.box = IMAGE_NAME
         master.vm.network "private_network", ip: SUBNET + "#{10}"
-        master.vm.hostname = "master-1"
+        master.vm.hostname = "master.jlab.org"
 		master.vm.synced_folder "data/", "/vagrant_data"
-		#master.vm.synced_folder "data/", "/vagrant_data", smb_username: "me", smb_password: "hophop"
+        master.vm.provider "virtualbox" do |v|
+            #v.name = "k8smaster1-1"
+            v.memory = 2048
+            v.cpus = 2
+        end
         master.vm.provision "shell", path: "scripts/master-pre-req.sh" do |s|
 		  s.args = [POD_CIDR, SUBNET + "#{10}"]
         end
     end
 
-    (1..N).each do |i|
+    (1..NodeCount).each do |i|
         config.vm.define "worker-#{i}" do |node|
             node.vm.box = IMAGE_NAME
             node.vm.network "private_network", ip: SUBNET + "#{i + 10}"
-            node.vm.hostname = "worker-#{i}"
+            node.vm.hostname = "worker-#{i}.jlabs.org"
 			node.vm.synced_folder "data/", "/vagrant_data"
-			#node.vm.synced_folder "data/", "/vagrant_data", smb_username: "me", smb_password: "hophop"
-			node.vm.provision "shell", path: "scripts/worker-pre-req.sh"
-            
+            node.vm.provider "virtualbox" do |v|
+                #v.name = "k8sworker1-#{i}"
+                v.memory = 2048
+                v.cpus = 2
             end
+			node.vm.provision "shell", path: "scripts/worker-pre-req.sh"
         end
-
     end
+end

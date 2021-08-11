@@ -6,7 +6,7 @@ used his [repo](https://github.com/vNugget/Kubernetes/tree/main/AutoKube) as tem
 
 This will install:
 
-- The Kubernetes version (currently 1.20)
+- The Kubernetes version (currently 1.21.2)
 - Docker as a container runtime
 - Calico as a CNI.
 

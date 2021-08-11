@@ -1,7 +1,8 @@
 # image name to be used  as the base image for the hosts
 IMAGE_NAME = "bento/ubuntu-20.04"
 # subnet to be used for the nodes
-SUBNET = "172.16.16."
+SUBNET = "10.10.0."
+#SUBNET = "172.16.16."
 # pod cidr to be used with kubeadm
 POD_CIDR = "192.168.0.0/16"
 # number of workers to be deployed
@@ -14,11 +15,12 @@ Vagrant.configure("2") do |config|
 
     config.vm.define "master-1" do |master|
         master.vm.box = IMAGE_NAME
-        master.vm.network "private_network", ip: SUBNET + "#{10}"
+        master.vm.network "public_network", ip: SUBNET + "#{50}"
+        #master.vm.network "private_network", ip: SUBNET + "#{10}"
         master.vm.hostname = "master.jlab.org"
 		master.vm.synced_folder "data/", "/vagrant_data"
         master.vm.provider "virtualbox" do |v|
-            v.name = "master"
+            #v.name = "master"
             v.memory = 2048
             v.cpus = 2
         end
@@ -30,11 +32,12 @@ Vagrant.configure("2") do |config|
     (1..NodeCount).each do |i|
         config.vm.define "worker-#{i}" do |node|
             node.vm.box = IMAGE_NAME
-            node.vm.network "private_network", ip: SUBNET + "#{i + 10}"
+            node.vm.network "public_network", ip: SUBNET + "#{i + 50}"
+            #node.vm.network "private_network", ip: SUBNET + "#{i + 10}"
             node.vm.hostname = "worker-#{i}.jlabs.org"
 			node.vm.synced_folder "data/", "/vagrant_data"
             node.vm.provider "virtualbox" do |v|
-                v.name = "worker-#{i}"
+                #v.name = "worker-#{i}"
                 v.memory = 2048
                 v.cpus = 2
             end

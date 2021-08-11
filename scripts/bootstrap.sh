@@ -11,14 +11,17 @@ net.bridge.bridge-nf-call-ip6tables = 1
 EOF
 sudo sysctl -p
 
-echo "[TASK 3] Docker repo add & installation"
-sudo apt-get update
-sudo apt-get install \
+echo "[TASK 3] Installing other softwares & Adding Docker repo"
+sudo apt-get update && sudo apt upgrade -y
+sudo apt-get install -y \
     apt-transport-https \
     ca-certificates \
     curl \
     gnupg \
-    lsb-release
+    lsb-release\
+    htop \
+    vim \
+    bash-completion
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo \
   "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
@@ -42,4 +45,4 @@ sudo apt-get install -y kubelet=1.21.2-00 kubeadm=1.21.2-00 kubectl=1.21.2-00
 sudo apt-mark hold kubelet kubeadm kubectl
 
 echo "[TASK 7] Set root password"
-echo -e "kubeadmin\nkubeadmin" | passwd root >/dev/null 2>&1
+echo -e "as\nas" | passwd root >/dev/null 2>&1

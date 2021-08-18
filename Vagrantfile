@@ -19,7 +19,7 @@ Vagrant.configure("2") do |config|
 		master.vm.synced_folder "data/", "/vagrant_data"
         master.vm.provider "virtualbox" do |v|
             #v.name = "master"
-            v.memory = 2048
+            v.memory = 4096
             v.cpus = 2
         end
         master.vm.provision "shell", path: "scripts/master-pre-req.sh" do |s|
@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
 			node.vm.synced_folder "data/", "/vagrant_data"
             node.vm.provider "virtualbox" do |v|
                 #v.name = "worker-#{i}"
-                v.memory = 2048
+                v.memory = 4096
                 v.cpus = 2
             end
 			node.vm.provision "shell", path: "scripts/worker-pre-req.sh"

@@ -12,6 +12,8 @@ EOF
 sudo sysctl -p
 
 echo "[TASK 3] Installing other softwares & Adding Docker repo"
+sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+service sshd restart
 sudo apt-get update && sudo apt upgrade -y
 sudo apt-get install -y \
     apt-transport-https \
@@ -26,7 +28,6 @@ sudo apt-get install -y \
     unzip \
     cmake \
     make \ 
-    build-essential \
     tree
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo \

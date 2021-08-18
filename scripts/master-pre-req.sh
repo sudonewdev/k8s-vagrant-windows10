@@ -33,4 +33,4 @@ chmod +x /vagrant_data/join.sh
 echo "[TASK 6] Install MetalLB"
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.10.2/manifests/namespace.yaml
 kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.10.2/manifests/metallb.yaml
-kubectl apply -f scripts/metallb_configmap.yaml
+kubectl apply -f /vagrant_data/metallb_configmap.yaml

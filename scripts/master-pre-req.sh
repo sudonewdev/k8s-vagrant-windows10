@@ -29,3 +29,8 @@ kubectl --kubeconfig=/etc/kubernetes/admin.conf create -f https://docs.projectca
 echo "[TASK 5] Create join command"
 kubeadm token create --print-join-command > /vagrant_data/join.sh
 chmod +x /vagrant_data/join.sh
+
+echo "[TASK 6] Install MetalLB"
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.10.2/manifests/namespace.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.10.2/manifests/metallb.yaml
+kubectl apply -f scripts/metallb_configmap.yaml

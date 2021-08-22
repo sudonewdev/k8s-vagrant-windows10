@@ -12,7 +12,7 @@ EOF
 sudo sysctl -p
 
 echo "[TASK 3] Installing other softwares & Adding Docker repo"
-sudo apt-get update && sudo apt upgrade -y
+sudo apt-get update
 sudo apt-get install -y \
     apt-transport-https \
     ca-certificates \
@@ -24,8 +24,6 @@ sudo apt-get install -y \
     bash-completion \
     net-tools \
     unzip \
-    cmake \
-    make \ 
     tree
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo \

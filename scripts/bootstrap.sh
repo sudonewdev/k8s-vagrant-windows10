@@ -12,8 +12,6 @@ EOF
 sudo sysctl -p
 
 echo "[TASK 3] Installing other softwares & Adding Docker repo"
-sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-service sshd restart
 sudo apt-get update && sudo apt upgrade -y
 sudo apt-get install -y \
     apt-transport-https \
@@ -51,10 +49,12 @@ sudo apt-get update
 sudo apt-get install -y kubelet=1.21.2-00 kubeadm=1.21.2-00 kubectl=1.21.2-00
 sudo apt-mark hold kubelet kubeadm kubectl
 
-echo "[TASK 7] Set root password"
-echo -e "kubeadmin\nkubeadmin" | passwd root >/dev/null 2>&1
-
-echo "[TASK 8] kubectl bash completion"
+echo "[TASK 7] kubectl bash completion"
 echo "source <(k completion bash)" >> ~/.bashrc
 echo "alias k=kubectl" >> /etc/bash.bashrc
 echo "complete -F __start_kubectl k" >>  ~/.bashrc 
+
+echo "[TASK 8] Set root password"
+echo -e "kubeadmin\nkubeadmin" | passwd root >/dev/null 2>&1
+sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+service sshd restart

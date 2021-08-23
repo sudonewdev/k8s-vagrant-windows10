@@ -16,6 +16,7 @@ Vagrant.configure("2") do |config|
         master.vm.box = IMAGE_NAME
         master.vm.network "private_network", ip: SUBNET + "#{10}"
         master.vm.hostname = "master.jlab.org"
+        master.vm.box_version = "202107.28.0"
 		master.vm.synced_folder "data/", "/vagrant_data"
         master.vm.provider "virtualbox" do |v|
             #v.name = "master"
@@ -32,10 +33,11 @@ Vagrant.configure("2") do |config|
             node.vm.box = IMAGE_NAME
             node.vm.network "private_network", ip: SUBNET + "#{i + 10}"
             node.vm.hostname = "worker-#{i}.jlabs.org"
+            node.vm.box_version = "202107.28.0"
 			node.vm.synced_folder "data/", "/vagrant_data"
             node.vm.provider "virtualbox" do |v|
                 #v.name = "worker-#{i}"
-                v.memory = 6192
+                v.memory = 4096
                 v.cpus = 2
             end
 			node.vm.provision "shell", path: "scripts/worker-pre-req.sh"

@@ -12,7 +12,7 @@ EOF
 sudo sysctl -p
 
 echo "[TASK 3] Installing other softwares & Adding Docker repo"
-sudo apt-get update
+sudo apt-get update && sudo apt upgrade -y
 sudo apt-get install -y \
     apt-transport-https \
     ca-certificates \
@@ -55,4 +55,4 @@ echo "complete -F __start_kubectl k" >>  ~/.bashrc
 echo "[TASK 8] Set root password"
 echo -e "kubeadmin\nkubeadmin" | passwd root >/dev/null 2>&1
 sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-service sshd restart
+sudo systemctl restart sshd

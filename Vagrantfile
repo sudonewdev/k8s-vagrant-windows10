@@ -5,7 +5,7 @@ SUBNET = "172.16.16."
 # pod cidr to be used with kubeadm
 POD_CIDR = "192.168.0.0/16"
 # number of workers to be deployed
-NodeCount = 2
+NodeCount = 1
 
 Vagrant.configure("2") do |config|
     config.ssh.insert_key = false
@@ -16,11 +16,10 @@ Vagrant.configure("2") do |config|
         master.vm.box = IMAGE_NAME
         master.vm.network "private_network", ip: SUBNET + "#{10}"
         master.vm.hostname = "master.jlab.org"
-        #master.vm.box_version = "202107.28.0"
 		master.vm.synced_folder "data/", "/vagrant_data"
         master.vm.provider "virtualbox" do |v|
             v.name = "master"
-            v.memory = 4096
+            v.memory = 8192
             v.cpus = 2
         end
         master.vm.provision "shell", path: "scripts/master-pre-req.sh" do |s|
@@ -33,11 +32,10 @@ Vagrant.configure("2") do |config|
             node.vm.box = IMAGE_NAME
             node.vm.network "private_network", ip: SUBNET + "#{i + 10}"
             node.vm.hostname = "worker-#{i}.jlabs.org"
-            #node.vm.box_version = "202107.28.0"
 			node.vm.synced_folder "data/", "/vagrant_data"
             node.vm.provider "virtualbox" do |v|
                 v.name = "worker-#{i}"
-                v.memory = 4096
+                v.memory = 8192
                 v.cpus = 2
             end
 			node.vm.provision "shell", path: "scripts/worker-pre-req.sh"

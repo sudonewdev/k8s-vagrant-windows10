@@ -11,7 +11,7 @@ net.bridge.bridge-nf-call-ip6tables = 1
 EOF
 sudo sysctl -p
 
-echo "[TASK 3] Installing other softwares & Adding Docker repo"
+echo "[TASK 3] Patching machine"
 sudo apt-get update && sudo apt upgrade -y
 sudo apt-get install -y \
     apt-transport-https \
@@ -24,13 +24,18 @@ sudo apt-get install -y \
     bash-completion \
     net-tools \
     unzip \
-    tree
+    tree \
+    python3 \
+    python3-pip \
+    python \
+    python-pip \
+    git
+
+echo "[TASK 4] Docker repo add & installation"
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo \
   "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-
-echo "[TASK 4] Docker installation"
 sudo apt update
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 sudo apt-mark hold docker-ce
@@ -53,6 +58,10 @@ echo "alias k=kubectl" >> /etc/bash.bashrc
 echo "complete -F __start_kubectl k" >>  ~/.bashrc 
 
 echo "[TASK 8] Set root password"
-echo -e "kubeadmin\nkubeadmin" | passwd root >/dev/null 2>&1
+echo -e "root\nroot" | passwd root >/dev/null 2>&1
 sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 sudo systemctl restart sshd
+
+echo "[TASK 9] Update /etc/hosts"
+echo "172.16.16.10 master" >> /etc/hosts
+echo "172.16.16.11 worker-1" >> /etc/hosts
